@@ -12,12 +12,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet weak var tableView: UITableView!
 
+    var presenter: MainPresenterImpl!
+
+    var dataList: [String] = ["plane1", "plane2"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = MainPresenterImpl(view: self)
+        presenter.getData()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return dataList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -27,5 +33,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("selected: \(indexPath.row)")
+    }
+}
+
+extension MainViewController : MainView {
+    func setupContent() {
+        dataList.append("added")
+        tableView.reloadData()
     }
 }
